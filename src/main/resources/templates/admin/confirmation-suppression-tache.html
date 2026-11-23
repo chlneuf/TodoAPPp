@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: base(~{::content},
+      'TodoApp - Supprimer une tâche', 'admin-taches')}">
+
+<div th:fragment="content" class="container py-4">
+
+    <h1 class="mb-4">
+        <i class="bi bi-trash"></i>
+        Confirmer la suppression
+    </h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="alert alert-warning">
+                Attention : cette action est définitive.
+            </div>
+
+            <p>
+                Voulez-vous vraiment supprimer cette tâche ?
+            </p>
+
+            <dl class="row">
+                <dt class="col-sm-3">Titre</dt>
+                <dd class="col-sm-9"
+                    th:text="${tacheASupprimer.titre}"></dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9"
+                    th:text="${tacheASupprimer.description ?: 'Aucune description'}"></dd>
+
+                <dt class="col-sm-3">Propriétaire</dt>
+                <dd class="col-sm-9"
+                    th:text="${tacheASupprimer.utilisateur.prenom + ' ' + tacheASupprimer.utilisateur.nom}"></dd>
+            </dl>
+
+            <form th:action="@{/admin/taches/{id}/supprimer(id=${tacheASupprimer.idTache})}"
+                  method="post">
+
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i>
+                    Confirmer la suppression
+                </button>
+
+                <a th:href="@{/admin/taches}"
+                   class="btn btn-outline-secondary ms-2">
+                    Annuler
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+</html>

@@ -12,7 +12,7 @@ description = "TodoApp"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -33,6 +33,14 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+// Intégration Spring Security avec Thymeleaf
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+
+// Outils de test de sécurité
+    testImplementation("org.springframework.security:spring-security-test")
 }
 
 kotlin {

@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: base(~{::content},
+      'TodoApp - Gestion des tâches', 'admin/taches')}">
+
+<div th:fragment="content" class="container py-4">
+
+    <!-- Titre de la page -->
+    <h1 class="mb-4">
+        <i class="bi bi-pencil-square"></i>
+        <span th:if="${idTache == null}">Créer une tâche</span>
+        <span th:unless="${idTache == null}">Modifier une tâche</span>
+    </h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <p class="text-muted">
+                Les champs marqués d'un astérisque (*) sont obligatoires.
+            </p>
+
+            <!-- Formulaire de création ou de modification -->
+            <form th:action="${idTache == null}
+                    ? @{/admin/taches/creer}
+                    : @{/admin/taches/{id}/modifier(id=${idTache})}"
+                  th:object="${tacheForm}"
+                  method="post">
+
+                <!-- Erreurs générales -->
+                <div th:if="${#fields.hasAnyErrors()}"
+                     class="alert alert-danger"
+                     role="alert">
+                    La tâche n'a pas été enregistrée.
+                    Vérifiez les champs indiqués.
+                </div>
+
+                <!-- Titre -->
+                <div class="mb-3">
+
+                    <label for="titre" class="form-label">
+                        Titre *
+                    </label>
+
+                    <input type="text"
+                           th:field="*{titre}"
+                           class="form-control"
+                           th:classappend="${#fields.hasErrors('titre')} ? 'is-invalid' : ''"
+                           required
+                           maxlength="255"
+                           pattern=".*\S.*">
+
+                    <div class="form-text">
+                        255 caractères maximum.
+                    </div>
+
+                    <div th:if="${#fields.hasErrors('titre')}"
+                         class="invalid-feedback"
+                         th:errors="*{titre}">
+                    </div>
+
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+
+                    <label for="description" class="form-label">
+                        Description
+                    </label>
+
+                    <textarea th:field="*{description}"
+                              class="form-control"
+                              rows="4">
+                    </textarea>
+
+                </div>
+
+                <!-- Date d'échéance -->
+                <div class="mb-3">
+
+                    <label for="dateEcheance" class="form-label">
+                        Date d'échéance
+                    </label>
+
+                    <input type="date"
+                           th:field="*{dateEcheance}"
+                           class="form-control"
+                           th:classappend="${#fields.hasErrors('dateEcheance')} ? 'is-invalid' : ''">
+
+                    <div class="form-text">
+                        Facultative. Vous pouvez laisser ce champ vide.
+                    </div>
+
+                    <div th:if="${#fields.hasErrors('dateEcheance')}"
+                         class="invalid-feedback">
+                        Saisissez une date valide.
+                    </div>
+
+                </div>
+
+                <!-- Choix du propriétaire -->
+                <div class="mb-4">
+
+                    <label for="utilisateurId" class="form-label">
+                        Propriétaire *
+                    </label>
+
+                    <select th:field="*{utilisateurId}"
+                            class="form-select"
+                            th:classappend="${#fields.hasErrors('utilisateurId')} ? 'is-invalid' : ''"
+                            required>
+
+                        <option value="">
+                            -- Choisir un utilisateur --
+                        </option>
+
+                        <option th:each="utilisateur : ${listeUtilisateurs}"
+                                th:value="${utilisateur.idUtilisateur}"
+                                th:text="${utilisateur.prenom + ' ' + utilisateur.nom + ' (' + utilisateur.email + ')'}">
+                        </option>
+
+                    </select>
+
+                    <div th:if="${#fields.hasErrors('utilisateurId')}"
+                         class="invalid-feedback"
+                         th:errors="*{utilisateurId}">
+                    </div>
+
+                </div>
+
+                <!-- Boutons -->
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i>
+                    Enregistrer
+                </button>
+
+                <a th:href="@{/admin/taches}"
+                   class="btn btn-outline-secondary ms-2">
+                    Annuler
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+</html>

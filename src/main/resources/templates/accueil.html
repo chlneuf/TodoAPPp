@@ -1,0 +1,35 @@
+
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: base(~{::content}, 'TodoApp-Accueil', 'accueil')}">
+
+<div th:fragment="content">
+
+  <h1>Bienvenue sur TodoApp</h1>
+
+  <p>Application de gestion des tâches.</p>
+
+  <!-- Aucun utilisateur connecté -->
+  <div th:if="${utilisateurActif == null}"
+       class="alert alert-warning mb-0"
+       role="alert">
+
+    <i class="bi bi-exclamation-triangle"></i>
+    Aucun utilisateur n’est actuellement connecté.
+
+    <a th:href="@{/login}" class="alert-link">
+      Se connecter
+    </a>
+  </div>
+
+  <!-- Utilisateur connecté -->
+  <div th:if="${utilisateurActif != null}">
+    <p>
+      Bienvenue
+      <strong th:text="${utilisateurActif.prenom + ' ' + utilisateurActif.nom}">
+        Utilisateur
+      </strong> !
+    </p>
+  </div>
+
+</div>
+</html>

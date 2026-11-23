@@ -1,0 +1,45 @@
+
+<div xmlns:th="http://www.thymeleaf.org">
+    <header th:fragment="header(activePage)"
+            class="bg-light border-bottom">
+        <div class="container d-flex align-items-center py-2">
+
+            <!-- Logo de l'application -->
+            <a th:href="@{/}" class="me-4">
+                <img th:src="@{/images/favicon.ico}"
+                     alt="TodoApp"
+                     width="40"
+                     height="40">
+            </a>
+
+            <!-- Navigation -->
+            <div th:replace="~{fragments/navbar :: navbar(${activePage})}"></div>
+
+
+            <!-- Utilisateur connecté et déconnexion -->
+            <form th:if="${utilisateurActif != null}"
+                  th:action="@{/logout}" method="post"
+                  class="ms-auto d-flex align-items-center gap-2">
+
+    <span class="fw-semibold text-end"
+          th:text="${utilisateurActif.prenom + ' ' + #strings.toUpperCase(utilisateurActif.nom)}">
+    </span>
+
+                <button type="submit"
+                        class="btn btn-outline-secondary btn-sm flex-shrink-0">
+                    <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                    Se déconnecter
+                </button>
+            </form>
+
+            <!-- Visiteur non connecté -->
+            <a th:if="${utilisateurActif == null}"
+               th:href="@{/login}"
+               class="btn btn-outline-primary btn-sm ms-auto">
+                Se connecter
+            </a>
+
+            </form>
+            </div>
+    </header>
+</div>

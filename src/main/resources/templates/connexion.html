@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Connexion | TodoApp</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+<main class="container min-vh-100 d-flex align-items-center justify-content-center py-4">
+    <div class="row justify-content-center w-100">
+        <div class="col-sm-10 col-md-7 col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-body p-4 p-sm-5">
+
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <img th:src="@{/images/favicon.ico}" alt="" width="40" height="40">
+                        <div>
+                            <p class="text-body-secondary mb-0">TodoApp</p>
+                            <h1 class="h3 mb-0">Connexion</h1>
+                        </div>
+                    </div>
+
+                    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                        Adresse e-mail ou mot de passe incorrect.
+                    </div>
+
+                    <div th:if="${param.logout}" class="alert alert-success" role="status">
+                        Vous avez été déconnecté.
+                    </div>
+
+                    <div th:if="${param.compteSupprime}" class="alert alert-success" role="status">
+                        Votre compte et ses tâches ont été supprimés. Vous avez été déconnecté.
+                    </div>
+
+                    <form th:action="@{/login}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Adresse e-mail</label>
+                            <input id="username" name="username" type="email"
+                                   class="form-control"
+                                   autocomplete="username" required autofocus>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Mot de passe</label>
+                            <input id="password" name="password" type="password"
+                                   class="form-control"
+                                   autocomplete="current-password" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Se connecter
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
